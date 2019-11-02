@@ -1,5 +1,3 @@
-#include <stdio.h>
-
 typedef struct Brasileiro
 {
     int cpf;
@@ -57,10 +55,14 @@ typedef struct Disciplina
     int codigo;
     char nome[30];
     int carga;
+    cadastros professordisciplina;
+    cadastros alunos[10];
 
 } disciplina;
 
 typedef struct Escola
 {
+    cadastros alunos[50];
+    cadastros professores[10];
     disciplina disciplinas[10];
 } escola;
