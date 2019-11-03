@@ -57,6 +57,7 @@ typedef struct Disciplina
     int carga;
     cadastros professordisciplina;
     cadastros alunos[10];
+    int qtdAlunos;
 
 } disciplina;
 
@@ -65,4 +66,9 @@ typedef struct Escola
     cadastros alunos[50];
     cadastros professores[10];
     disciplina disciplinas[10];
+    int qtdProfessores;
+    int qtdAlunos;
+    int qtdDisciplinas;
 } escola;
+
+static const struct Cadastro EmptyStruct;

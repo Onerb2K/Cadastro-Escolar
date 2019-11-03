@@ -34,6 +34,7 @@ int cadastraDisciplina(cadastros *Professores, disciplina *Disciplinas, int qtdD
             strcpy(Disciplinas[qtdDisciplinas].nome, nome);
             Disciplinas[qtdDisciplinas].carga = carga;
             Disciplinas[qtdDisciplinas].professordisciplina = Professores[idprofessor];
+            Disciplinas[qtdDisciplinas].qtdAlunos = 0;
             qtdDisciplinas++;
             printf("\nMateria Cadastrada!\n");
             return 1;
@@ -92,7 +93,6 @@ void alteraDisciplina(cadastros *Professores, disciplina *Disciplinas)
             printf("\nProfessor nao encontrado.\n");
             return;
         }
-        
     }
     else
     {
@@ -101,16 +101,152 @@ void alteraDisciplina(cadastros *Professores, disciplina *Disciplinas)
     }
 };
 
-void adicionaAluno(){
-
+void adicionaAluno(disciplina *Disciplinas, cadastros *Alunos)
+{
+    int codigo = 0;
+    int matricula = 0;
+    int achou = 0;
+    int achou2 = 0;
+    int id_disciplina = 0;
+    int qtdAlunos;
+    cadastros Aluno;
+    scanf("%i", &codigo);
+    for (int i = 0; i <= sizeof(Disciplinas) / sizeof(Disciplinas[0]); i++)
+    {
+        if (Disciplinas[i].codigo == codigo)
+        {
+            achou = 1;
+            id_disciplina = i;
+            break;
+        }
+    }
+    if (achou == 1)
+    {
+        scanf("%i", &matricula);
+        qtdAlunos = Disciplinas[id_disciplina].qtdAlunos;
+        for (int i = 0; i <= (sizeof(Alunos) / sizeof(Alunos[0])) + 1; i++)
+        {
+            if (Alunos[i].aluno.matricula == matricula)
+            {
+                achou2 = 1;
+                Aluno = Alunos[i];
+                break;
+            }
+        }
+        if (achou2 == 1)
+        {
+            printf("%i", Disciplinas[id_disciplina].qtdAlunos);
+            Disciplinas[id_disciplina].alunos[qtdAlunos] = Aluno;
+            Disciplinas[id_disciplina].qtdAlunos++;
+            printf("%i", Disciplinas[id_disciplina].qtdAlunos);
+            printf("\nAluno cadastrado com sucesso.\n");
+            return;
+        }
+        else
+        {
+            printf("\nMatricula nao encontrada.\n");
+            return;
+        }
+    }
+    else
+    {
+        printf("\nDisciplina nao existe.\n");
+        return;
+    }
 };
 
-void removeAluno(){
-
+void removeAluno(disciplina *Disciplinas, cadastros *Alunos)
+{
+    int codigo = 0;
+    int matricula = 0;
+    int achou = 0;
+    int achou2 = 0;
+    int id_disciplina = 0;
+    int id_aluno = 0;
+    scanf("%i", &codigo);
+    for (int i = 0; i <= sizeof(Disciplinas) / sizeof(Disciplinas[0]); i++)
+    {
+        if (Disciplinas[i].codigo == codigo)
+        {
+            achou = 1;
+            id_disciplina = i;
+            break;
+        }
+    }
+    if (achou == 1)
+    {
+        scanf("%i", &matricula);
+        for (int i = 0; i <= (sizeof(Alunos) / sizeof(Alunos[0])) + 1; i++)
+        {
+            if (Alunos[i].aluno.matricula == matricula)
+            {
+                achou2 = 1;
+                id_aluno = i;
+                break;
+            }
+        }
+        if (achou2 == 1)
+        {
+            for (int i = id_aluno; i <= (sizeof(Alunos) / sizeof(Alunos[0])) + 1; i++)
+            {
+                if (i < (sizeof(Alunos) / sizeof(Alunos[0])) + 1)
+                {
+                    Disciplinas[id_disciplina].alunos[i] = Disciplinas[id_disciplina].alunos[i + 1];
+                }
+                else
+                {
+                    Disciplinas[id_disciplina].alunos[i] = EmptyStruct;
+                }
+            }
+            printf("\nAluno removido com sucesso.\n");
+            return;
+        }
+        else
+        {
+            printf("\nMatricula nao encontrada.\n");
+            return;
+        }
+    }
+    else
+    {
+        printf("\nDisciplina nao encontrada.\n");
+        return;
+    }
 };
 
-void exibeDisciplina(){
+void exibeDisciplina(disciplina *Disciplinas)
+{
+    int codigo = 0;
+    int achou = 0;
+    int id_disciplina = 0;
+    scanf("%i", &codigo);
 
+    for (int i = 0; i < (sizeof(Disciplinas) / sizeof(Disciplinas[0]))+1; i++)
+    {
+        if (Disciplinas[i].codigo == codigo)
+        {
+            achou = 1;
+            id_disciplina = i;
+            break;
+        }
+    }
+    if (achou == 1)
+    {
+        printf("%i\n", Disciplinas[id_disciplina].codigo);
+        printf("%s\n", Disciplinas[id_disciplina].nome);
+        printf("%s\n", Disciplinas[id_disciplina].professordisciplina.nome);
+        for (int i = 0; i < Disciplinas[id_disciplina].qtdAlunos; i++)
+        {
+            printf("%i ", Disciplinas[id_disciplina].alunos[i].aluno.matricula);
+            printf("%s", Disciplinas[id_disciplina].alunos[i].nome);
+        }
+        return;
+    }
+    else
+    {
+        printf("\nDisciplina nao encontrada.\n");
+        return;
+    }
 };
 
 int main(int argc, char const *argv[])
@@ -152,6 +288,20 @@ int main(int argc, char const *argv[])
     professores[1].tipo = 1;
     professores[1].professor.pis = 22222;
 
+    strcpy(alunos[0].nome, "marcos");
+    strcpy(alunos[0].sobrenome, "sousa");
+    alunos[0].nacionalidade = 1;
+    alunos[0].brasileiro.cpf = 333333333;
+    alunos[0].brasileiro.rg = 3333333;
+    alunos[0].dia = 26;
+    alunos[0].mes = 8;
+    alunos[0].ano = 1999;
+    alunos[0].pnet = 0;
+    alunos[0].cep = 33333333;
+    strcpy(alunos[0].endereco, "q300 cj52 cs12");
+    alunos[0].tipo = 1;
+    alunos[0].aluno.matricula = 12345;
+
     do
     {
         printf("\nSistema de Disciplinas-------------\n1 - Cadastrar disciplina\n2 - Alterar professor de uma disciplina\n3 - Adicionar um aluno a uma disciplina\n4 - Remover aluno de uma disciplina\n5 - Exibir dados de uma disciplina\n6 - Voltar ao menu principal\n");
@@ -168,6 +318,18 @@ int main(int argc, char const *argv[])
 
         case 2:
             alteraDisciplina(professores, disciplinas);
+            break;
+
+        case 3:
+            adicionaAluno(disciplinas, alunos);
+            break;
+
+        case 4:
+            removeAluno(disciplinas, alunos);
+            break;
+
+        case 5:
+            exibeDisciplina(disciplinas);
             break;
 
         case 6:
