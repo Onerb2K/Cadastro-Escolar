@@ -251,56 +251,52 @@ void exibeDisciplina(disciplina *Disciplinas)
 
 int main(int argc, char const *argv[])
 {
-    cadastros professores[10];
-    cadastros alunos[50];
-    disciplina disciplinas[10];
-    int qtd = 0;
+    escola escola;
     int controle = 0;
-    int qtdDisciplinas = 0;
+    escola.qtdDisciplinas = 0;
     int resultado = 0;
-    escola Escola;
 
-    strcpy(professores[0].nome, "marcos");
-    strcpy(professores[0].sobrenome, "sousa");
-    professores[0].nacionalidade = 1;
-    professores[0].brasileiro.cpf = 111111111;
-    professores[0].brasileiro.rg = 1111111;
-    professores[0].dia = 26;
-    professores[0].mes = 8;
-    professores[0].ano = 1999;
-    professores[0].pnet = 0;
-    professores[0].cep = 1111111;
-    strcpy(professores[0].endereco, "q300 cj52 cs12");
-    professores[0].tipo = 1;
-    professores[0].professor.pis = 11111;
+    strcpy(escola.professores[0].nome, "marcos");
+    strcpy(escola.professores[0].sobrenome, "sousa");
+    escola.professores[0].nacionalidade = 1;
+    escola.professores[0].brasileiro.cpf = 111111111;
+    escola.professores[0].brasileiro.rg = 1111111;
+    escola.professores[0].dia = 26;
+    escola.professores[0].mes = 8;
+    escola.professores[0].ano = 1999;
+    escola.professores[0].pnet = 0;
+    escola.professores[0].cep = 1111111;
+    strcpy(escola.professores[0].endereco, "q300 cj52 cs12");
+    escola.professores[0].tipo = 1;
+    escola.professores[0].professor.pis = 11111;
 
-    strcpy(professores[1].nome, "laura");
-    strcpy(professores[1].sobrenome, "evelyn");
-    professores[1].nacionalidade = 1;
-    professores[1].brasileiro.cpf = 222222222;
-    professores[1].brasileiro.rg = 2222222;
-    professores[1].dia = 20;
-    professores[1].mes = 10;
-    professores[1].ano = 2000;
-    professores[1].pnet = 0;
-    professores[1].cep = 22222222;
-    strcpy(professores[1].endereco, "q300 cj52 cs12");
-    professores[1].tipo = 1;
-    professores[1].professor.pis = 22222;
+    strcpy(escola.professores[1].nome, "laura");
+    strcpy(escola.professores[1].sobrenome, "evelyn");
+    escola.professores[1].nacionalidade = 1;
+    escola.professores[1].brasileiro.cpf = 222222222;
+    escola.professores[1].brasileiro.rg = 2222222;
+    escola.professores[1].dia = 20;
+    escola.professores[1].mes = 10;
+    escola.professores[1].ano = 2000;
+    escola.professores[1].pnet = 0;
+    escola.professores[1].cep = 22222222;
+    strcpy(escola.professores[1].endereco, "q300 cj52 cs12");
+    escola.professores[1].tipo = 1;
+    escola.professores[1].professor.pis = 22222;
 
-    strcpy(alunos[0].nome, "marcos");
-    strcpy(alunos[0].sobrenome, "sousa");
-    alunos[0].nacionalidade = 1;
-    alunos[0].brasileiro.cpf = 333333333;
-    alunos[0].brasileiro.rg = 3333333;
-    alunos[0].dia = 26;
-    alunos[0].mes = 8;
-    alunos[0].ano = 1999;
-    alunos[0].pnet = 0;
-    alunos[0].cep = 33333333;
-    strcpy(alunos[0].endereco, "q300 cj52 cs12");
-    alunos[0].tipo = 1;
-    alunos[0].aluno.matricula = 12345;
+    strcpy(escola.alunos[0].nome, "marcos");
+    strcpy(escola.alunos[0].sobrenome, "sousa");
+    escola.alunos[0].nacionalidade = 1;
+    escola.alunos[0].brasileiro.cpf = 333333333;
+    escola.alunos[0].brasileiro.rg = 3333333;
+    escola.alunos[0].dia = 26;
+    escola.alunos[0].mes = 8;
+    escola.alunos[0].ano = 1999;
+    escola.alunos[0].pnet = 0;
+    escola.alunos[0].cep = 33333333;
+    strcpy(escola.alunos[0].endereco, "q300 cj52 cs12");
+    escola.alunos[0].tipo = 1;
+    escola.alunos[0].aluno.matricula = 12345;
 
     do
     {
@@ -309,27 +305,27 @@ int main(int argc, char const *argv[])
         switch (controle)
         {
         case 1:
-            resultado = cadastraDisciplina(professores, disciplinas, qtdDisciplinas);
+            resultado = cadastraDisciplina(escola.professores, escola.disciplinas, escola.qtdDisciplinas);
             if (resultado == 1)
             {
-                qtdDisciplinas++;
+                escola.qtdDisciplinas++;
             }
             break;
 
         case 2:
-            alteraDisciplina(professores, disciplinas);
+            alteraDisciplina(escola.professores, escola.disciplinas);
             break;
 
         case 3:
-            adicionaAluno(disciplinas, alunos);
+            adicionaAluno(escola.disciplinas, escola.alunos);
             break;
 
         case 4:
-            removeAluno(disciplinas, alunos);
+            removeAluno(escola.disciplinas, escola.alunos);
             break;
 
         case 5:
-            exibeDisciplina(disciplinas);
+            exibeDisciplina(escola.disciplinas);
             break;
 
         case 6:
