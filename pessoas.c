@@ -384,9 +384,9 @@ void alterarDados(cadastros pessoa[], int *qtda)
                 return;
             }
         }
+}
+}
 
-}
-}
 void exibe_pessoax(cadastros pessoa[], int *qtda)
 {
     int pos=-1;
@@ -524,4 +524,3 @@ void main()
         scanf("%d",&comando);
     }
 }
-
