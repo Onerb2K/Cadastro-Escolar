@@ -3,51 +3,51 @@
 #include "estruturas.h"
 
 //cadastros cs;
-void cadastrar(cadastros pessoa[], int *qtda)
+void cadastrar(cadastros pessoa[], int *qtda, int *qtda_al, int *qtda_prof)
 {
     char dia[3];
     char mes[3];
     char ano[5];
-    if (*qtda > 19)
+    if(*qtda_al >=50 || *qtda_prof >=10)
     {
         printf("Limite maximo de pessoas alcancadas, encerrando cadastro... \n");
         return;
     }
-    pessoa[*qtda].nacionalidade = 3;
-    pessoa[*qtda].dia = 32;
-    pessoa[*qtda].mes = 13;
-    pessoa[*qtda].pnet = 3;
-    pessoa[*qtda].cep = 1;
-    pessoa[*qtda].tipo = 3;
+    pessoa[*qtda].nacionalidade=3;
+    pessoa[*qtda].dia=32;
+    pessoa[*qtda].mes=13;
+    pessoa[*qtda].pnet=3;
+    pessoa[*qtda].cep=1;
+    pessoa[*qtda].tipo=3;
     char aux1[20];
     getchar();
-    scanf("%[^;]s", pessoa[*qtda].nome);
+    scanf("%[^;]s",pessoa[*qtda].nome);
     getchar();
-    scanf("%[^;]s", pessoa[*qtda].sobrenome);
+    scanf("%[^;]s",pessoa[*qtda].sobrenome);
     getchar();
-    while (pessoa[*qtda].nacionalidade < 0 || pessoa[*qtda].nacionalidade > 1)
+    while(pessoa[*qtda].nacionalidade < 0 || pessoa[*qtda].nacionalidade > 1)
     {
         scanf("%d;", &pessoa[*qtda].nacionalidade);
-        if (pessoa[*qtda].nacionalidade < 0 || pessoa[*qtda].nacionalidade > 1)
+        if(pessoa[*qtda].nacionalidade<0 || pessoa[*qtda].nacionalidade>1)
         {
             printf("nacionalidade invalida, Digite novamente:\n");
         }
-        if (pessoa[*qtda].nacionalidade == 0)
+        if(pessoa[*qtda].nacionalidade==0)
         {
             scanf("%[^;]s", pessoa[*qtda].brasileiro.cpf);
             getchar();
-            if (strlen(pessoa[*qtda].brasileiro.cpf) < 11 || strlen(pessoa[*qtda].brasileiro.rg) > 11)
+            if(strlen(pessoa[*qtda].brasileiro.cpf)<11 || strlen(pessoa[*qtda].brasileiro.rg)>11)
             {
                 printf("RG invalido! Digite novamente:\n");
             }
             scanf("%[^;]s", pessoa[*qtda].brasileiro.rg);
             getchar();
-            if (strlen(pessoa[*qtda].brasileiro.rg) < 9 || strlen(pessoa[*qtda].brasileiro.rg) > 9)
+            if(strlen(pessoa[*qtda].brasileiro.rg)<9 || strlen(pessoa[*qtda].brasileiro.rg)>9)
             {
                 printf("CPF invalido! Digite novamente:\n");
             }
         }
-        if (pessoa[*qtda].nacionalidade == 1)
+        if(pessoa[*qtda].nacionalidade==1)
         {
             scanf("%[^;]s", pessoa[*qtda].estrangeiro.passaporte);
             getchar();
@@ -55,7 +55,7 @@ void cadastrar(cadastros pessoa[], int *qtda)
             getchar();
         }
     }
-    while (pessoa[*qtda].mes > 12 || pessoa[*qtda].dia > 31)
+    while(pessoa[*qtda].mes>12 || pessoa[*qtda].dia>31)
     {
         scanf("%[^/]s", dia);
         getchar();
@@ -66,60 +66,62 @@ void cadastrar(cadastros pessoa[], int *qtda)
         pessoa[*qtda].dia = atoi(dia);
         pessoa[*qtda].mes = atoi(mes);
         pessoa[*qtda].ano = atoi(ano);
-        if (pessoa[*qtda].dia > 31)
+        if(pessoa[*qtda].dia>31)
         {
             printf("Dia invalido, digite novamente.\n");
         }
-        if (pessoa[*qtda].mes > 12)
+        if(pessoa[*qtda].mes>12)
         {
             printf("Mes invalido, digite novamente.\n");
         }
-        if (pessoa[*qtda].ano > 9999)
+        if(pessoa[*qtda].ano>9999)
         {
             printf("Ano invalido, digite novamente.\n");
         }
     }
     scanf("%d;", &pessoa[*qtda].pnet);
-    if (pessoa[*qtda].pnet == 1)
+    if(pessoa[*qtda].pnet==1)
     {
         scanf("%[^;]s", pessoa[*qtda].pne.laudo);
         getchar();
     }
-    if (pessoa[*qtda].pnet > 1 || pessoa[*qtda].pnet < 0)
+    if(pessoa[*qtda].pnet>1 || pessoa[*qtda].pnet<0)
     {
         printf("pne invalido! Digite novamente:");
     }
-    while (pessoa[*qtda].cep < 10000000 || pessoa[*qtda].cep > 99999999)
+    while(pessoa[*qtda].cep<10000000 || pessoa[*qtda].cep>99999999)
     {
         scanf("%d;", &pessoa[*qtda].cep);
-        if (pessoa[*qtda].cep < 10000000 || pessoa[*qtda].cep > 99999999)
+        if(pessoa[*qtda].cep<10000000 || pessoa[*qtda].cep>99999999)
         {
             printf("CEP invalido! Digite novamente:\n");
         }
     }
     scanf("%[^;]s", pessoa[*qtda].endereco);
     getchar();
-    while (pessoa[*qtda].tipo < 0 || pessoa[*qtda].tipo > 1)
+    while(pessoa[*qtda].tipo < 0 || pessoa[*qtda].tipo > 1)
     {
         scanf("%d;", &pessoa[*qtda].tipo);
-        if (pessoa[*qtda].tipo < 0 || pessoa[*qtda].tipo > 1)
+        if(pessoa[*qtda].tipo < 0 || pessoa[*qtda].tipo > 1)
         {
             printf("tipo de pessoa inválido! Digite novamente:\n");
         }
-        if (pessoa[*qtda].tipo == 1)
+        if(pessoa[*qtda].tipo==1)
         {
+            (*qtda_prof)++;
             scanf("%[^\n]s", pessoa[*qtda].professor.pis);
             getchar();
-            if (strlen(pessoa[*qtda].professor.pis) < 11 || strlen(pessoa[*qtda].professor.pis) > 11)
+            if(strlen(pessoa[*qtda].professor.pis)<11 || strlen(pessoa[*qtda].professor.pis)>11)
             {
                 printf("pis invalido! Digite novamente:");
                 scanf("%[^\n]s", pessoa[*qtda].professor.pis);
                 getchar();
             }
         }
-        if (pessoa[*qtda].tipo == 0)
+        if(pessoa[*qtda].tipo==0)
         {
-            pessoa[*qtda].aluno.matricula = 19000 + *qtda;
+            pessoa[*qtda].aluno.matricula=19000+*qtda_al;
+            (*qtda_al)++;
         }
     }
     (*qtda)++;
@@ -128,21 +130,21 @@ void cadastrar(cadastros pessoa[], int *qtda)
 void removerpessoa(cadastros pessoa[], int *qtda)
 {
     char nremov[30];
-    int pos = 0, i;
+    int pos=0,i;
     printf("Digite o nome do aluno que deseja remover: \n");
     getchar();
-    scanf("%[^\n]s", nremov);
+    scanf("%[^\n]s",nremov);
     getchar();
-    for (i = 0; i < *qtda; i++)
+    for(i = 0 ; i < *qtda; i++)
     {
-        if (strcmp(nremov, pessoa[i].nome) == 0)
+        if(strcmp(nremov, pessoa[i].nome)== 0)
         {
             printf("Aluno encontrado!\n");
             pos = i;
             (*qtda)--;
-            for (i = pos; i < *qtda; i++)
+            for(i = pos; i < *qtda; i++)
             {
-                pessoa[i] = pessoa[i + 1];
+                pessoa[i] = pessoa[i+1];
             }
         }
         else
@@ -150,258 +152,149 @@ void removerpessoa(cadastros pessoa[], int *qtda)
             pos = -1;
         }
     }
-    if (pos == -1)
+    if(pos == -1)
     {
         printf("Pessoa nao cadastrada!\n");
         return;
     }
-    printf("A pessoa %s, posicao %d foi deletada\n", pessoa[pos].nome, pos);
+    printf("A pessoa %s, posicao %d foi deletada\n",pessoa[pos].nome,pos);
 }
 
 void exibirdados(cadastros pessoa[], int *qtda)
 {
     printf("Exibindo dados \n");
-    for (int i = 0; i < *qtda; i++)
+    for(int i = 0; i < *qtda; i++)
     {
-        printf("Nome: %s\n", pessoa[i].nome);
-        printf("Sobrenome: %s \n", pessoa[i].sobrenome);
-        printf("Data de nascimento: %d/", pessoa[i].dia);
-        printf("%d/", pessoa[i].mes);
-        printf("%d\n", pessoa[i].ano);
-        if (pessoa[i].nacionalidade == 0)
+        printf("Nome: %s\n",pessoa[i].nome);
+        printf("Sobrenome: %s \n",pessoa[i].sobrenome);
+        printf("Data de nascimento: %d/",pessoa[i].dia);
+        printf("%d/",pessoa[i].mes);
+        printf("%d\n",pessoa[i].ano);
+        if(pessoa[i].nacionalidade==0)
         {
             printf("Brasileiro\n");
             printf("CPF: %s\n", pessoa[i].brasileiro.cpf);
             printf("RG: %s\n", pessoa[i].brasileiro.rg);
         }
-        if (pessoa[i].nacionalidade == 1)
+        if(pessoa[i].nacionalidade==1)
         {
             printf("Pais de origem: %s\n", pessoa[i].estrangeiro.pais_orig);
             printf("Numero do passaporte: %s\n", pessoa[i].estrangeiro.passaporte);
         }
-        if (pessoa[i].pnet == 1)
+        if(pessoa[i].pnet==1)
         {
             printf("Codigo do laudo medico: %s\n", pessoa[i].pne.laudo);
+
         }
         printf("CEP: %d\n", pessoa[i].cep);
         printf("Endereco: %s\n", pessoa[i].endereco);
-        if (pessoa[i].tipo == 0)
+        if(pessoa[i].tipo==0)
         {
             printf("Matricula: %d\n", pessoa[i].aluno.matricula);
         }
-        if (pessoa[i].tipo == 1)
+        if(pessoa[i].tipo==1)
         {
             printf("PIS: %s\n", pessoa[i].professor.pis);
         }
     }
 }
 
-void alterarDados(cadastros *pessoa)
+void alterarDados(cadastros pessoa[], int *qtda)
 {
-    int tipo = 0;
-    long matricula = 0;
-    char pis[11];
-    int achou = 0;
-    int controle = 0;
-    int id_pessoa = 0;
-    int pnet = 0;
-    char laudo[30];
-    int cep = 0;
-    char endereco[200];
-    printf("\nAluno ou Professor?\n");
-    scanf("%i", &tipo);
-    if (tipo == 1 || tipo == 0)
-    {
-        if (tipo == 0)
+     int pos=-1;
+    char aux[11];
+    long int aux2;
+    int tipo;
+    int i;
+    int alt;
+    printf("Se a pessoa que deseja exibir for um aluno, digite 0, caso seja um professor, digite 1:");
+    scanf("%d", &tipo);
+    getchar();
+    if(tipo==1){
+
+        printf("Digite o pis do professor:");
+        scanf("%s", aux);
+        printf("%s", aux);
+        getchar();
+        for(i = 0 ; i < *qtda; i++)
         {
-            printf("\nDigite a matricula: \n");
-            scanf("%ld", &matricula);
-            getchar();
-            for (int i = 0; i <= 2; i++)
+            printf("%d", i);
+            if(strcmp(aux, pessoa[i].professor.pis)==0)
             {
-                if (pessoa[i].aluno.matricula == matricula)
-                {
-                    achou = 1;
-                    id_pessoa = i;
-                    break;
-                }
-            }
-            if (achou)
-            {
-                printf("\n1 - Portador de Necessidades especiais?\n2 - Codigo do laudo medico\n3 - CEP\n4 - Endereco\n");
-                scanf("%i", &controle);
-                getchar();
-                switch (controle)
-                {
-                case 1:
-                    printf("\nPNE?\n");
-                    scanf("%i", &pnet);
-                    getchar();
-                    if (pnet == 1 || pnet == 0)
-                    {
-                        if (pessoa[id_pessoa].pnet != pnet)
-                        {
-                            if (pnet == 1)
-                            {
-                                printf("\nDigite o laudo: \n");
-                                scanf("%s", pessoa[id_pessoa].pne.laudo);
-                            }
-                            else
-                            {
-                                strcpy(pessoa[id_pessoa].pne.laudo, NULL);
-                            }
-                        }
-                        else
-                        {
-                            printf("\nStatus ja presente no sistema.\n");
-                        }
-                    }
-                    else
-                    {
-                        printf("\nValor Invalido.\n");
-                    }
-                    break;
-
-                case 2:
-                    if (pessoa[id_pessoa].pnet == 1)
-                    {
-                        printf("\nDigite o novo laudo: \n");
-                        scanf("%30s", laudo);
-                        getchar();
-                        strcpy(pessoa[id_pessoa].pne.laudo, laudo);
-                    }
-                    else
-                    {
-                        printf("\nO aluno nao e PNE.\n");
-                    }
-                    break;
-
-                case 3:
-                    printf("\nDigite o novo CEP\n");
-                    scanf("%i", &cep);
-                    getchar();
-                    pessoa[id_pessoa].cep = cep;
-                    break;
-
-                case 4:
-                    printf("\nDigite o novo endereco\n");
-                    scanf("%200[^\n]", endereco);
-                    getchar();
-                    strcpy(pessoa[id_pessoa].endereco, endereco);
-                    break;
-
-                default:
-                    printf("\nEntrada Invalida.\n");
-                    break;
-                }
-            }
-            else
-            {
-                printf("\nAluno nao encontrado.\n");
-                return;
+                printf("professor encontrado!\n");
+                pos = i;
             }
         }
-
-        if (tipo == 1)
-        {
-            printf("\nDigite o Pis: \n");
-            scanf("%11s", pis);
-            getchar();
-            for (int i = 0; i <= sizeof(pessoa) / sizeof(pessoa[0]); i++)
-            {
-                if (pessoa[i].professor.pis == pis)
-                {
-                    achou = 1;
-                    id_pessoa = i;
-                    break;
-                }
-            }
-            if (achou)
-            {
-                printf("\n1 - Portador de Necessidades especiais?\n2 - Codigo do laudo medico\n3 - CEP\n4 - Endereco\n");
-                scanf("%i", &controle);
-                getchar();
-                switch (controle)
-                {
-                case 1:
-                    printf("\nPNE?\n");
-                    scanf("%i", &pnet);
-                    getchar();
-                    if (pnet == 1 || pnet == 0)
-                    {
-                        if (pessoa[id_pessoa].pnet != pnet)
-                        {
-                            if (pnet == 1)
-                            {
-                                printf("\nDigite o laudo: \n");
-                                scanf("%s", pessoa[id_pessoa].pne.laudo);
-                                getchar();
-                            }
-                            else
-                            {
-                                strcpy(pessoa[id_pessoa].pne.laudo, NULL);
-                            }
-                        }
-                        else
-                        {
-                            printf("\nStatus ja presente no sistema.\n");
-                        }
-                    }
-                    else
-                    {
-                        printf("\nValor Invalido.\n");
-                    }
-                    break;
-
-                case 2:
-                    printf("\nDigite o novo laudo\n");
-                    if (pessoa[id_pessoa].pnet == 1)
-                    {
-                        scanf("%30s", laudo);
-                        getchar();
-                        strcpy(pessoa[id_pessoa].pne.laudo, laudo);
-                    }
-                    else
-                    {
-                        printf("\nO professor não é PNE.\n");
-                    }
-                    break;
-
-                case 3:
-                    printf("\nDigite o novo CEP: \n");
-                    scanf("%i", &cep);
-                    getchar();
-                    pessoa[id_pessoa].cep = cep;
-                    break;
-
-                case 4:
-                    printf("\nDigite o novo endereco\n");
-                    scanf("%200[^\n]", endereco);
-                    getchar();
-                    strcpy(pessoa[id_pessoa].endereco, endereco);
-                    break;
-
-                default:
-                    break;
-                }
-            }
-            else
-            {
-                printf("\nProfessor nao encontrado.\n");
-                return;
-            }
+        printf("Deseja alterar a pessoa para pne? se sim digite 1\n");
+        printf("Alterar Código do laudo médico, digite 2");
+        printf("Alterar CEP, digite 3");
+        printf("Alterar endereço, digite 4");
+        scanf("%d", &alt);
+        if(alt=1){
+            pessoa[pos].pnet=1;
+            printf("Digite o codigo do laudo medico:");
+            scanf("%s", pessoa[pos].pne.laudo);
+        }
+        if(alt=2){
+            printf("Digite o novo codigo do laudo medico:");
+            scanf("%s", pessoa[pos].pne.laudo);
+        }
+        if(alt=3){
+            printf("Digite o novo CEP:");
+            scanf("%d", &pessoa[pos].cep);
+        }
+        if(alt=4){
+            printf("Digite o novo endereco:");
+            scanf("%[^\n]s", pessoa[pos].endereco);
         }
     }
-    else
-    {
-        printf("\nValor invalido.\n");
+
+    if(tipo==0){
+
+        printf("Digite a matricula do aluno:");
+        scanf("%ld", &aux2);
+        getchar();
+        for(i = 0 ; i < *qtda; i++)
+        {
+            if(aux2==pessoa[i].aluno.matricula)
+            {
+                printf("Aluno encontrado!\n");
+                pos = i;
+            }
+        }
+        printf("Deseja alterar a pessoa para pne? se sim digite 1");
+        printf("Alterar Código do laudo médico, digite 2");
+        printf("Alterar CEP, digite 3");
+        printf("Alterar endereço, digite 4");
+        scanf("%d", &alt);
+        if(alt=1){
+            pessoa[pos].pnet=1;
+            printf("Digite o codigo do laudo medico:");
+            scanf("%s", pessoa[pos].pne.laudo);
+        }
+        if(alt=2){
+            printf("Digite o novo codigo do laudo medico:");
+            scanf("%s", pessoa[pos].pne.laudo);
+        }
+        if(alt=3){
+            printf("Digite o novo CEP:");
+            scanf("%d", &pessoa[pos].cep);
+        }
+        if(alt=4){
+            printf("Digite o novo endereco:");
+            scanf("%[^\n]s", pessoa[pos].endereco);
+        }
+    }
+
+    if(pos==-1){
+        printf("Pessoa nao encontrada!");
         return;
     }
 }
 
 void exibe_pessoax(cadastros pessoa[], int *qtda)
 {
-    int pos = -1;
+    int pos=-1;
     char aux[11];
     long int aux2;
     int tipo;
@@ -409,30 +302,29 @@ void exibe_pessoax(cadastros pessoa[], int *qtda)
     printf("Se a pessoa que deseja exibir for um aluno, digite 0, caso seja um professor, digite 1:");
     scanf("%d", &tipo);
     getchar();
-    if (tipo == 1)
-    {
+    if(tipo==1){
+
         printf("Digite o pis do professor:");
         scanf("%s", aux);
         getchar();
-        for (i = 0; i < *qtda; i++)
+        for(i = 0 ; i < *qtda; i++)
         {
-            if (strcmp(aux, pessoa[i].professor.pis) == 0)
+            if(atoi(aux)==atoi(pessoa[i].professor.pis))
             {
-                printf("Professor encontrado!\n");
+                printf("professor encontrado!\n");
                 pos = i;
             }
         }
     }
 
-    if (tipo == 0)
-    {
+    if(tipo==0){
 
         printf("Digite a matricula do aluno:");
         scanf("%ld", &aux2);
         getchar();
-        for (i = 0; i < *qtda; i++)
+        for(i = 0 ; i < *qtda; i++)
         {
-            if (aux2 == pessoa[i].aluno.matricula)
+            if(aux2==pessoa[i].aluno.matricula)
             {
                 printf("Aluno encontrado!\n");
                 pos = i;
@@ -440,44 +332,46 @@ void exibe_pessoax(cadastros pessoa[], int *qtda)
         }
     }
 
-    if (pos == -1)
-    {
+    if(pos==-1){
         printf("Pessoa nao encontrada!");
         return;
     }
     printf("Exibindo dados da pessoa, posicao %d:\n", pos);
 
-    printf("Nome: %s\n", pessoa[pos].nome);
-    printf("Sobrenome: %s \n", pessoa[pos].sobrenome);
-    printf("Data de nascimento: %d/", pessoa[pos].dia);
-    printf("%d/", pessoa[pos].mes);
-    printf("%d\n", pessoa[pos].ano);
-    if (pessoa[pos].nacionalidade == 0)
+    printf("Nome: %s\n",pessoa[pos].nome);
+    printf("Sobrenome: %s \n",pessoa[pos].sobrenome);
+    printf("Data de nascimento: %d/",pessoa[pos].dia);
+    printf("%d/",pessoa[pos].mes);
+    printf("%d\n",pessoa[pos].ano);
+    if(pessoa[pos].nacionalidade==0)
     {
         printf("Brasileiro\n");
         printf("CPF: %s\n", pessoa[pos].brasileiro.cpf);
         printf("RG: %s\n", pessoa[pos].brasileiro.rg);
     }
-    if (pessoa[pos].nacionalidade == 1)
+    if(pessoa[pos].nacionalidade==1)
     {
         printf("Pais de origem: %s\n", pessoa[pos].estrangeiro.pais_orig);
         printf("Numero do passaporte: %s\n", pessoa[pos].estrangeiro.passaporte);
     }
-    if (pessoa[pos].pnet == 1)
+    if(pessoa[pos].pnet==1)
     {
         printf("Codigo do laudo medico: %s\n", pessoa[pos].pne.laudo);
+
     }
     printf("CEP: %d\n", pessoa[pos].cep);
     printf("Endereco: %s\n", pessoa[pos].endereco);
-    if (pessoa[pos].tipo == 0)
+    if(pessoa[pos].tipo==0)
     {
         printf("Matricula: %d\n", pessoa[pos].aluno.matricula);
     }
-    if (pessoa[pos].tipo == 1)
+    if(pessoa[pos].tipo==1)
     {
         printf("PIS: %s\n", pessoa[pos].professor.pis);
     }
 }
+
+
 
 void help()
 {
@@ -489,46 +383,49 @@ void help()
     printf(" 5 alterar dados de uma pessoa especifica\n");
     printf(" 6 mensagem de ajuda \n");
     printf(" 7 sair do programa\n");
+
 }
 
 void main()
 {
     help();
     cadastros pessoa[20];
-    int qtda = 0;
+    int qtda=0;
+    int qtda_al=0;
+    int qtda_prof=0;
     int comando;
 
     printf("Digite a opcao que deseja\n");
-    scanf("%d", &comando);
+    scanf("%d",&comando);
 
     while (comando != 7)
     {
         switch (comando)
         {
-        case 1:
-            cadastrar(pessoa, &qtda);
+        case 1 :
+            cadastrar(pessoa,&qtda,&qtda_al,&qtda_prof);
             break;
-        case 2:
-            removerpessoa(pessoa, &qtda);
+        case 2 :
+            removerpessoa(pessoa,&qtda);
             break;
-        case 3:
+        case 3 :
             exibirdados(pessoa, &qtda);
             break;
-        case 4:
+        case 4 :
             exibe_pessoax(pessoa, &qtda);
             break;
-        case 5:
-            alterarDados(pessoa);
+        case 5 :
+            alterarDados(pessoa, &qtda);
             break;
-        case 6:
+        case 6 :
             help();
             break;
         default:
         {
             while (comando != '\n')
-                scanf("%d", &comando);
+                scanf("%d",&comando);
         };
         }
-        scanf("%d", &comando);
+        scanf("%d",&comando);
     }
 }
