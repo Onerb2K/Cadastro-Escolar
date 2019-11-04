@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "estruturas.h"
 
-int cadastraDisciplina(cadastros *Professores, disciplina *Disciplinas, int qtdDisciplinas)
+int cadastraDisciplina(cadastros *Pessoas, disciplina *Disciplinas, int qtdDisciplinas)
 {
-    int pis = 0;
+    char pis[11];
     int codigo = 0;
     char nome[30];
     int carga = 0;
@@ -12,16 +13,17 @@ int cadastraDisciplina(cadastros *Professores, disciplina *Disciplinas, int qtdD
     int idprofessor = 0;
     if (qtdDisciplinas < 10)
     {
-        scanf("%i;%[^;];%i;%i", &codigo, nome, &carga, &pis);
+        printf("\nDigite o codigo, o nome, a carga horaria e o PIS do professor da materia (codigo;nome;carga.pis): \n");
+        scanf("%i;%15[^;];%i;%s", &codigo, nome, &carga, pis);
         printf("%s\n", nome);
         printf("%i\n", codigo);
         printf("%i\n", carga);
-        printf("%i\n", pis);
-        printf("%i\n", Professores[qtdDisciplinas].professor.pis);
+        printf("%s\n", pis);
+        printf("%s\n", Pessoas[qtdDisciplinas].professor.pis);
 
-        for (int i = 0; i <= sizeof(Professores) / sizeof(Professores[0]); i++)
+        for (int i = 0; i <= (sizeof(Pessoas) / sizeof(Pessoas[0])) + 1; i++)
         {
-            if (Professores[i].professor.pis == pis)
+            if (atoi(Pessoas[i].professor.pis) == atoi(pis))
             {
                 achou = 1;
                 idprofessor = i;
@@ -33,7 +35,7 @@ int cadastraDisciplina(cadastros *Professores, disciplina *Disciplinas, int qtdD
             Disciplinas[qtdDisciplinas].codigo = codigo;
             strcpy(Disciplinas[qtdDisciplinas].nome, nome);
             Disciplinas[qtdDisciplinas].carga = carga;
-            Disciplinas[qtdDisciplinas].professordisciplina = Professores[idprofessor];
+            Disciplinas[qtdDisciplinas].professordisciplina = Pessoas[idprofessor];
             Disciplinas[qtdDisciplinas].qtdAlunos = 0;
             qtdDisciplinas++;
             printf("\nMateria Cadastrada!\n");
@@ -52,16 +54,17 @@ int cadastraDisciplina(cadastros *Professores, disciplina *Disciplinas, int qtdD
     }
 };
 
-void alteraDisciplina(cadastros *Professores, disciplina *Disciplinas)
+void alteraDisciplina(cadastros *Pessoas, disciplina *Disciplinas)
 {
     int codigo = 0;
-    int pis = 0;
+    char pis[11];
     int achou = 0;
     int achou2 = 0;
     int id_disciplina = 0;
     int id_professor = 0;
+    printf("\nDigite o codigo da disciplina: \n");
     scanf("%i", &codigo);
-    for (int i = 0; i <= sizeof(Disciplinas) / sizeof(Disciplinas[0]); i++)
+    for (int i = 0; i <= (sizeof(Disciplinas) / sizeof(Disciplinas[0])) + 1; i++)
     {
         if (Disciplinas[i].codigo == codigo)
         {
@@ -72,10 +75,11 @@ void alteraDisciplina(cadastros *Professores, disciplina *Disciplinas)
     }
     if (achou == 1)
     {
-        scanf("%i", &pis);
-        for (int i = 0; i <= (sizeof(Professores) / sizeof(Professores[0])) + 1; i++)
+        printf("\nDigite o pis do novo professor da Disciplina: \n");
+        scanf("%11s", pis);
+        for (int i = 0; i <= (sizeof(Pessoas) / sizeof(Pessoas[0])) + 1; i++)
         {
-            if (Professores[i].professor.pis == pis)
+            if (atoi(Pessoas[i].professor.pis) == atoi(pis))
             {
                 achou2 = 1;
                 id_professor = i;
@@ -84,7 +88,7 @@ void alteraDisciplina(cadastros *Professores, disciplina *Disciplinas)
         }
         if (achou2 == 1)
         {
-            Disciplinas[id_disciplina].professordisciplina = Professores[id_professor];
+            Disciplinas[id_disciplina].professordisciplina = Pessoas[id_professor];
             printf("\nProfessor da disciplina alterado.\n");
             return;
         }
@@ -101,17 +105,19 @@ void alteraDisciplina(cadastros *Professores, disciplina *Disciplinas)
     }
 };
 
-void adicionaAluno(disciplina *Disciplinas, cadastros *Alunos)
+void adicionaAluno(disciplina *Disciplinas, cadastros *Pessoas)
 {
     int codigo = 0;
-    int matricula = 0;
+    long int matricula = 0;
     int achou = 0;
     int achou2 = 0;
+    int existe = 0;
     int id_disciplina = 0;
     int qtdAlunos;
     cadastros Aluno;
+    printf("\nDigite o codigo da disciplina: \n");
     scanf("%i", &codigo);
-    for (int i = 0; i <= sizeof(Disciplinas) / sizeof(Disciplinas[0]); i++)
+    for (int i = 0; i <= (sizeof(Disciplinas) / sizeof(Disciplinas[0])) + 1; i++)
     {
         if (Disciplinas[i].codigo == codigo)
         {
@@ -122,25 +128,43 @@ void adicionaAluno(disciplina *Disciplinas, cadastros *Alunos)
     }
     if (achou == 1)
     {
-        scanf("%i", &matricula);
+        printf("\nDigite a matricula do aluno que deseja adicionar a materia: \n");
+        scanf("%ld", &matricula);
         qtdAlunos = Disciplinas[id_disciplina].qtdAlunos;
-        for (int i = 0; i <= (sizeof(Alunos) / sizeof(Alunos[0])) + 1; i++)
+        for (int i = 0; i <= (sizeof(Pessoas) / sizeof(Pessoas[0])) + 2; i++)
         {
-            if (Alunos[i].aluno.matricula == matricula)
+            if (Pessoas[i].aluno.matricula == matricula)
             {
                 achou2 = 1;
-                Aluno = Alunos[i];
+                Aluno = Pessoas[i];
                 break;
             }
         }
         if (achou2 == 1)
         {
-            printf("%i", Disciplinas[id_disciplina].qtdAlunos);
-            Disciplinas[id_disciplina].alunos[qtdAlunos] = Aluno;
-            Disciplinas[id_disciplina].qtdAlunos++;
-            printf("%i", Disciplinas[id_disciplina].qtdAlunos);
-            printf("\nAluno cadastrado com sucesso.\n");
-            return;
+            for (int i = 0; i <= (sizeof(Pessoas) / sizeof(Pessoas[0])) + 2; i++)
+            {
+                if (Disciplinas[id_disciplina].alunos[i].aluno.matricula == matricula)
+                {
+                    existe = 1;
+                    break;
+                }
+            }
+
+            if (existe == 0)
+            {
+                printf("%i", Disciplinas[id_disciplina].qtdAlunos);
+                Disciplinas[id_disciplina].alunos[qtdAlunos] = Aluno;
+                Disciplinas[id_disciplina].qtdAlunos++;
+                printf("%i", Disciplinas[id_disciplina].qtdAlunos);
+                printf("\nAluno cadastrado com sucesso.\n");
+                return;
+            }
+            else
+            {
+                printf("\nAluno já cadastrado.\n");
+                return;
+            }
         }
         else
         {
@@ -155,16 +179,17 @@ void adicionaAluno(disciplina *Disciplinas, cadastros *Alunos)
     }
 };
 
-void removeAluno(disciplina *Disciplinas, cadastros *Alunos)
+void removeAluno(disciplina *Disciplinas, cadastros *Pessoas)
 {
     int codigo = 0;
-    int matricula = 0;
+    long int matricula = 0;
     int achou = 0;
     int achou2 = 0;
     int id_disciplina = 0;
     int id_aluno = 0;
+    printf("\nDigite o codigo da disciplina: \n");
     scanf("%i", &codigo);
-    for (int i = 0; i <= sizeof(Disciplinas) / sizeof(Disciplinas[0]); i++)
+    for (int i = 0; i <= (sizeof(Disciplinas) / sizeof(Disciplinas[0])) + 1; i++)
     {
         if (Disciplinas[i].codigo == codigo)
         {
@@ -175,10 +200,11 @@ void removeAluno(disciplina *Disciplinas, cadastros *Alunos)
     }
     if (achou == 1)
     {
-        scanf("%i", &matricula);
-        for (int i = 0; i <= (sizeof(Alunos) / sizeof(Alunos[0])) + 1; i++)
+        printf("\nDigite a matricula do aluno a ser removido: \n");
+        scanf("%ld", &matricula);
+        for (int i = 0; i <= (sizeof(Pessoas) / sizeof(Pessoas[0])) + 2; i++)
         {
-            if (Alunos[i].aluno.matricula == matricula)
+            if (Pessoas[i].aluno.matricula == matricula)
             {
                 achou2 = 1;
                 id_aluno = i;
@@ -187,9 +213,9 @@ void removeAluno(disciplina *Disciplinas, cadastros *Alunos)
         }
         if (achou2 == 1)
         {
-            for (int i = id_aluno; i <= (sizeof(Alunos) / sizeof(Alunos[0])) + 1; i++)
+            for (int i = id_aluno; i <= (sizeof(Pessoas) / sizeof(Pessoas[0])) + 2; i++)
             {
-                if (i < (sizeof(Alunos) / sizeof(Alunos[0])) + 1)
+                if (i < (sizeof(Pessoas) / sizeof(Pessoas[0])) + 1)
                 {
                     Disciplinas[id_disciplina].alunos[i] = Disciplinas[id_disciplina].alunos[i + 1];
                 }
@@ -219,9 +245,9 @@ void exibeDisciplina(disciplina *Disciplinas)
     int codigo = 0;
     int achou = 0;
     int id_disciplina = 0;
+    printf("\nDigite o codigo da disciplina: \n");
     scanf("%i", &codigo);
-
-    for (int i = 0; i < (sizeof(Disciplinas) / sizeof(Disciplinas[0]))+1; i++)
+    for (int i = 0; i < (sizeof(Disciplinas) / sizeof(Disciplinas[0])) + 1; i++)
     {
         if (Disciplinas[i].codigo == codigo)
         {
@@ -232,13 +258,18 @@ void exibeDisciplina(disciplina *Disciplinas)
     }
     if (achou == 1)
     {
+        printf("\nCodigo da Disciplina: ");
         printf("%i\n", Disciplinas[id_disciplina].codigo);
+        printf("\nNome da Disciplina: ");
         printf("%s\n", Disciplinas[id_disciplina].nome);
-        printf("%s\n", Disciplinas[id_disciplina].professordisciplina.nome);
+        printf("\nProfessor da Disciplina: ");
+        printf("%s ", Disciplinas[id_disciplina].professordisciplina.nome);
+        printf("%s\n", Disciplinas[id_disciplina].professordisciplina.sobrenome);
+        printf("\nAlunos da Disciplina: ");
         for (int i = 0; i < Disciplinas[id_disciplina].qtdAlunos; i++)
         {
-            printf("%i ", Disciplinas[id_disciplina].alunos[i].aluno.matricula);
-            printf("%s", Disciplinas[id_disciplina].alunos[i].nome);
+            printf("%ld ", Disciplinas[id_disciplina].alunos[i].aluno.matricula);
+            printf("%s\n", Disciplinas[id_disciplina].alunos[i].nome);
         }
         return;
     }
@@ -256,47 +287,47 @@ int main(int argc, char const *argv[])
     escola.qtdDisciplinas = 0;
     int resultado = 0;
 
-    strcpy(escola.professores[0].nome, "marcos");
-    strcpy(escola.professores[0].sobrenome, "sousa");
-    escola.professores[0].nacionalidade = 1;
-    escola.professores[0].brasileiro.cpf = 111111111;
-    escola.professores[0].brasileiro.rg = 1111111;
-    escola.professores[0].dia = 26;
-    escola.professores[0].mes = 8;
-    escola.professores[0].ano = 1999;
-    escola.professores[0].pnet = 0;
-    escola.professores[0].cep = 1111111;
-    strcpy(escola.professores[0].endereco, "q300 cj52 cs12");
-    escola.professores[0].tipo = 1;
-    escola.professores[0].professor.pis = 11111;
+    strcpy(escola.pessoas[0].nome, "marcos");
+    strcpy(escola.pessoas[0].sobrenome, "sousa");
+    escola.pessoas[0].nacionalidade = 1;
+    strcpy(escola.pessoas[0].brasileiro.cpf, "11111111111");
+    strcpy(escola.pessoas[0].brasileiro.rg, "111111111");
+    escola.pessoas[0].dia = 26;
+    escola.pessoas[0].mes = 8;
+    escola.pessoas[0].ano = 1999;
+    escola.pessoas[0].pnet = 0;
+    escola.pessoas[0].cep = 1111111;
+    strcpy(escola.pessoas[0].endereco, "q300 cj52 cs12");
+    escola.pessoas[0].tipo = 1;
+    strcpy(escola.pessoas[0].professor.pis, "11111");
 
-    strcpy(escola.professores[1].nome, "laura");
-    strcpy(escola.professores[1].sobrenome, "evelyn");
-    escola.professores[1].nacionalidade = 1;
-    escola.professores[1].brasileiro.cpf = 222222222;
-    escola.professores[1].brasileiro.rg = 2222222;
-    escola.professores[1].dia = 20;
-    escola.professores[1].mes = 10;
-    escola.professores[1].ano = 2000;
-    escola.professores[1].pnet = 0;
-    escola.professores[1].cep = 22222222;
-    strcpy(escola.professores[1].endereco, "q300 cj52 cs12");
-    escola.professores[1].tipo = 1;
-    escola.professores[1].professor.pis = 22222;
+    strcpy(escola.pessoas[1].nome, "laura");
+    strcpy(escola.pessoas[1].sobrenome, "evelyn");
+    escola.pessoas[1].nacionalidade = 1;
+    strcpy(escola.pessoas[1].brasileiro.cpf, "22222222222");
+    strcpy(escola.pessoas[1].brasileiro.rg, "222222222");
+    escola.pessoas[1].dia = 20;
+    escola.pessoas[1].mes = 10;
+    escola.pessoas[1].ano = 2000;
+    escola.pessoas[1].pnet = 0;
+    escola.pessoas[1].cep = 22222222;
+    strcpy(escola.pessoas[1].endereco, "q300 cj52 cs12");
+    escola.pessoas[1].tipo = 1;
+    strcpy(escola.pessoas[1].professor.pis, "22222");
 
-    strcpy(escola.alunos[0].nome, "marcos");
-    strcpy(escola.alunos[0].sobrenome, "sousa");
-    escola.alunos[0].nacionalidade = 1;
-    escola.alunos[0].brasileiro.cpf = 333333333;
-    escola.alunos[0].brasileiro.rg = 3333333;
-    escola.alunos[0].dia = 26;
-    escola.alunos[0].mes = 8;
-    escola.alunos[0].ano = 1999;
-    escola.alunos[0].pnet = 0;
-    escola.alunos[0].cep = 33333333;
-    strcpy(escola.alunos[0].endereco, "q300 cj52 cs12");
-    escola.alunos[0].tipo = 1;
-    escola.alunos[0].aluno.matricula = 12345;
+    strcpy(escola.pessoas[2].nome, "marcos");
+    strcpy(escola.pessoas[2].sobrenome, "sousa");
+    escola.pessoas[2].nacionalidade = 1;
+    strcpy(escola.pessoas[2].brasileiro.cpf, "33333333333");
+    strcpy(escola.pessoas[2].brasileiro.rg, "333333333");
+    escola.pessoas[2].dia = 26;
+    escola.pessoas[2].mes = 8;
+    escola.pessoas[2].ano = 1999;
+    escola.pessoas[2].pnet = 0;
+    escola.pessoas[2].cep = 33333333;
+    strcpy(escola.pessoas[2].endereco, "q300 cj52 cs12");
+    escola.pessoas[2].tipo = 1;
+    escola.pessoas[2].aluno.matricula = 12345;
 
     do
     {
@@ -305,7 +336,7 @@ int main(int argc, char const *argv[])
         switch (controle)
         {
         case 1:
-            resultado = cadastraDisciplina(escola.professores, escola.disciplinas, escola.qtdDisciplinas);
+            resultado = cadastraDisciplina(escola.pessoas, escola.disciplinas, escola.qtdDisciplinas);
             if (resultado == 1)
             {
                 escola.qtdDisciplinas++;
@@ -313,15 +344,15 @@ int main(int argc, char const *argv[])
             break;
 
         case 2:
-            alteraDisciplina(escola.professores, escola.disciplinas);
+            alteraDisciplina(escola.pessoas, escola.disciplinas);
             break;
 
         case 3:
-            adicionaAluno(escola.disciplinas, escola.alunos);
+            adicionaAluno(escola.disciplinas, escola.pessoas);
             break;
 
         case 4:
-            removeAluno(escola.disciplinas, escola.alunos);
+            removeAluno(escola.disciplinas, escola.pessoas);
             break;
 
         case 5:
