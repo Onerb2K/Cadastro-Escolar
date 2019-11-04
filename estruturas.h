@@ -52,3 +52,25 @@ typedef struct Cadastro
     int cep;
     char endereco[200];
 } cadastros ;
+
+typedef struct Disciplina
+{
+    int codigo;
+    char nome[30];
+    int carga;
+    cadastros professordisciplina;
+    cadastros alunos[10];
+    int qtdAlunos;
+
+} disciplina;
+
+typedef struct Escola
+{
+    cadastros pessoas[60];
+    disciplina disciplinas[10];
+    int qtdProfessores;
+    int qtdAlunos;
+    int qtdDisciplinas;
+} escola;
+
+static const struct Cadastro EmptyStruct;
