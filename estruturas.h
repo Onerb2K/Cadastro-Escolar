@@ -1,7 +1,7 @@
 typedef struct Brasileiro
 {
-    int cpf;
-    int rg;
+    char cpf[13];
+    char rg[9];
 } brasileiro;
 
 typedef struct Estrangeiro
@@ -12,17 +12,17 @@ typedef struct Estrangeiro
 
 typedef struct PNE
 {
-    int laudo;
+    char laudo[10];
 } pne;
 
 typedef struct Aluno
 {
-    int matricula;
+    long int matricula;
 } aluno;
 
 typedef struct Professor
 {
-    int pis;
+    char pis[11];
 } professor;
 
 typedef struct Cadastro
@@ -30,17 +30,20 @@ typedef struct Cadastro
     char nome[15];
     char sobrenome[30];
     int nacionalidade;
-    union {
+    union
+    {
         brasileiro brasileiro;
         estrangeiro estrangeiro;
     };
     int tipo;
-    union {
+    union
+    {
         aluno aluno;
         professor professor;
     };
     int pnet;
-    union {
+    union
+    {
         pne pne;
     };
     int dia;
@@ -48,27 +51,4 @@ typedef struct Cadastro
     int ano;
     int cep;
     char endereco[200];
-} cadastros;
-
-typedef struct Disciplina
-{
-    int codigo;
-    char nome[30];
-    int carga;
-    cadastros professordisciplina;
-    cadastros alunos[10];
-    int qtdAlunos;
-
-} disciplina;
-
-typedef struct Escola
-{
-    cadastros alunos[50];
-    cadastros professores[10];
-    disciplina disciplinas[10];
-    int qtdProfessores;
-    int qtdAlunos;
-    int qtdDisciplinas;
-} escola;
-
-static const struct Cadastro EmptyStruct;
+} cadastros ;
