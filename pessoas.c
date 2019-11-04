@@ -36,15 +36,15 @@ void cadastrar(cadastros pessoa[], int *qtda, int *qtda_al, int *qtda_prof)
         {
             scanf("%[^;]s", pessoa[*qtda].brasileiro.cpf);
             getchar();
-            if(strlen(pessoa[*qtda].brasileiro.cpf)<11 || strlen(pessoa[*qtda].brasileiro.rg)>11)
+            if(strlen(pessoa[*qtda].brasileiro.cpf)<11 || strlen(pessoa[*qtda].brasileiro.cpf)>11)
             {
-                printf("RG invalido! Digite novamente:\n");
+                printf("CPF invalido! Digite novamente:\n");
             }
             scanf("%[^;]s", pessoa[*qtda].brasileiro.rg);
             getchar();
             if(strlen(pessoa[*qtda].brasileiro.rg)<9 || strlen(pessoa[*qtda].brasileiro.rg)>9)
             {
-                printf("CPF invalido! Digite novamente:\n");
+                printf("RG invalido! Digite novamente:\n");
             }
         }
         if(pessoa[*qtda].nacionalidade==1)
@@ -429,3 +429,4 @@ void main()
         scanf("%d",&comando);
     }
 }
+
