@@ -267,7 +267,7 @@ void alterarDados(cadastros pessoa[], int *qtda)
                     if (pessoa[id_pessoa].pnet == 1)
                     {
                         printf("\nDigite o novo laudo: \n");
-                        scanf("%30s", laudo);
+                        scanf("%s", laudo);
                         strcpy(pessoa[id_pessoa].pne.laudo, laudo);
                     }
                     else
@@ -353,7 +353,7 @@ void alterarDados(cadastros pessoa[], int *qtda)
                     if (pessoa[id_pessoa].pnet == 1)
                     {
                         printf("\nDigite o novo laudo: \n");
-                        scanf("%30s", laudo);
+                        scanf("%s", laudo);
                         strcpy(pessoa[id_pessoa].pne.laudo, laudo);
                     }
                     else
